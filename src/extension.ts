@@ -15,18 +15,31 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('tasper-utility.exec_tasper', () => {
-		if(!vscode.workspace.workspaceFolders) return
-		let workingDirectory  : vscode.Uri = vscode.workspace.workspaceFolders[0].uri
+	let disposable = vscode.commands.registerCommand('tasper-utility.exec_tasper', (filePath : string) => {
+		let pathToPass : string;
 
-		let pathCartella : string =path.resolve(workingDirectory.toString().replace("file://",""))
-		console.log(pathCartella)
+		if(filePath){
+			pathToPass = filePath.toString()
+		}
+
+		else{
+			if(vscode.workspace.workspaceFolders)
+				{
+					pathToPass = vscode.workspace.workspaceFolders[0].uri.toString()
+				}
+			else {
+				return}
+		}
+					
+		pathToPass = path.resolve( pathToPass.replace("file:/",""));
+
+		console.log(pathToPass)
 		const task = new vscode.Task(
 			{ type: "tasper" },
 			vscode.TaskScope.Workspace,
 			"execute",
 			"tasper",
-			new vscode.ShellExecution(path.join("npm exec tasper -- test ",pathCartella, " --solver=dlv2 ", ), {
+			new vscode.ShellExecution("npm exec tasper -- test ".concat( pathToPass , " --solver=dlv2 "), {
 				cwd: __dirname,
 			  })
 		  );

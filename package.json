@@ -14,6 +14,14 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "menus" : {
+      "explorer/context": [
+        {
+          "command": "tasper-utility.exec_tasper",
+          "group": "tasper"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "tasper-utility.exec_tasper",
