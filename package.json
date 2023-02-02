@@ -10,22 +10,55 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:tasper-utility.exec_tasper"
+    "onCommand:tasper-utility.exec_tasper_dlv2"
   ],
   "main": "./out/extension.js",
   "contributes": {
+
+    "submenus": [
+      {
+        "id": "tasper.submenu",
+        "label": "Launch Tasper"
+      }
+    ],
+
     "menus" : {
       "explorer/context": [
         {
-          "command": "tasper-utility.exec_tasper",
-          "group": "tasper"
+          "submenu": "tasper.submenu",
+          "group": "tasper.util"
+      }
+      ],
+      "tasper.submenu" : [
+        {
+          "command": "tasper-utility.exec_tasper_dlv2",
+          "group": "tasper.util"
+        },
+        {
+          "command": "tasper-utility.exec_tasper_clingo",
+          "group": "tasper.util"
         }
-      ]
+      ],
+      "commandPalette": [
+        {
+            "command": "tasper-utility.exec_tasper_dlv2",
+            "when": "false"
+        },
+        {
+          "command": "tasper-utility.exec_tasper_clingo",
+          "when": "false"
+      }
+    ]
+
     },
     "commands": [
       {
-        "command": "tasper-utility.exec_tasper",
-        "title": "Execute with Tasper"
+        "command": "tasper-utility.exec_tasper_dlv2",
+        "title": "Test with DLV2"
+      },
+      {
+        "command": "tasper-utility.exec_tasper_clingo",
+        "title": "Test with Clingo"
       }
     ]
   },
